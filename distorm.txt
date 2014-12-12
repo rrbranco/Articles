@@ -1,0 +1,134 @@
+Adding new instructions to diStorm3 and extending current ones
+
+So recently I came across an article by Microsoft [1] about a new
+malware using some undocumented instructions (to be fair, I read the article
+when they released it but completely forgot until a commit to detect the
+technique was made in Pev [2]).
+
+What immediately called my attention when first read the article is the fact
+that although the disassemblers showed and the debuggers did not correctly
+translate the instruction, it had no effect in the rest of the code.
+
+Since I'm a big fan of diStorm (and open-source) I decided to disassemble the piece 
+and see the results:
+
+diStorm version: 3.3.0
+bits: 32
+filename: ../examples/linux/fpu.out
+origin: 00000000
+00000000 (01) d9                       DB 0xd9
+00000001 (02) d8df                     FCOMP ST7
+00000003 (01) df                       DB 0xdf
+00000004 (01) df                       DB 0xdf
+00000005 (01) df                       DB 0xdf
+00000006 (01) df                       DB 0xdf
+00000007 (01) df                       DB 0xdf
+00000008 (01) df                       DB 0xdf
+00000009 (01) df                       DB 0xdf
+0000000a (01) df                       DB 0xdf
+0000000b (01) df                       DB 0xdf
+0000000c (02) 8bec                     MOV EBP, ESP
+
+
+Since diStorm also does not recognize the instructions, I took the challenge to
+add them to the software.  After reading the internals [3] document, it was
+clear the design decisions and how they actually complicate some changes (but make
+sense considering the performance improvements).
+
+It is actually much simpler than I first thought, due to some undocumented
+companion software Gil provides to us:
+        disOps (developed in python)
+
+If you edit the x86sets.py file (disOps/x86sets.py) you going to see a sequence
+of calls to a function Set().  This sequence is in the order of bytes in the
+opcode, so in the case of our research, we need to add an opcode (FSTPNCE) and
+extend another one (FSTP) - A good tip is to always have a look into similar
+instructions before trying to create your extension:
+                ...
+                Set("df //07", ["FISTP"], [OPT.FPUM64], IFlag.MODRM_REQUIRED)
+                Set("df //e0", ["FNSTSW"], [OPT.ACC16], IFlag.INST_FLAGS_NONE)
+                ...
+
+In the original sequence (above) you see that diStorm does not support the
+dfdf opcode for FSTP, so I changed to:
+
+                Set("df //07", ["FISTP"], [OPT.FPUM64], IFlag.MODRM_REQUIRED)
+                Set("df //df", ["FSTP"], [OPT.FPU_SSI], IFlag._32BITS)
+                Set("df //e0", ["FNSTSW"], [OPT.ACC16], IFlag.INST_FLAGS_NONE)
+
+It is quite clear what it does:
+                Set the DF opcode, followed by another DF opcode as the FSTP instruction, having two FPU registers as part of it (ST0, ST7).  The flags defines that the secondary byte
+in this case defines (the second register, the ST7).
+
+Also, we need to add a new instruction (FSTPNCE):
+                Set("d9 //c9", ["FXCH"], [], IFlag.INST_FLAGS_NONE)
+                Set("d9 //d0", ["FNOP"], [], IFlag.INST_FLAGS_NONE)
+                Set("d9 //e0", ["FCHS"], [], IFlag.INST_FLAGS_NONE)
+
+Again, our instruction is not there, so we change to:
+                Set("d9 //c9", ["FXCH"], [], IFlag.INST_FLAGS_NONE)
+                Set("d9 //d0", ["FNOP"], [], IFlag.INST_FLAGS_NONE)
+                Set("d9 //d8", ["FSTPNCE"], [OPT.FPU_SI, OPT.FPU_SI], IFlag.INST_FLAGS_NONE)
+                Set("d9 //e0", ["FCHS"], [], IFlag.INST_FLAGS_NONE)
+
+This time, the d9 opcode is followed by d8, it has two FPU registers as parameters (ST0, ST0).
+
+Also, in the disOps/disOps.py file I removed a comment in the end of the file (near to the end of the main function):
+		# DumpMnemonics()
+		
+Becomes:
+		DumpMnemonics()
+		
+When we run the disOps we get as output a file named output.txt.  This file is used to replace the src/insts.c file (just after the includes, in my case, from line 29 to the end):
+                vi src/insts.c
+                        :29,$ d  -> this deletes from line 29 to the end of the file
+                        :x       -> save and exit
+                cat disOps/output.txt >> src/insts.c  ->  To append to the insts.c file
+				
+The disOps also generates a disOps/defs.txt file, containing the enum that we need to insert in the include/mnemonics.h (it is a typedef of _InstructionType).
+
+If we compile, we going to notice that the disassembly is still incorrect, since it shows the FSTPNCE instruction as FCHS.  This is because the generated insts.c file only have the
+pointers and flags to disassemble, but not the mneumonic itself.  This is part of the mneumonics.c file:
+                        const unsigned char _MNEMONICS[] =
+
+In here we have for each index in the table the size of the string that represents the mnemonic followed by it, for example:
+                "\x09" "UNDEFINED\0"
+
+Since the index is ordered by the opcode (Tries data structure), we need to position our FSTPNCE just before the FCHS:
+                "\x04" "FNOP\0" "\x07" "FSTPNCE\0" "\x04" "FCHS\0" "\x04" "FABS\0" "\x04" "FTST\0" "\x04" "FXAM\0"
+
+So in here we have:
+                "\x07"  -> FSTPNCE string has 7 bytes
+
+Compiling and testing we finally have the desired result:
+
+diStorm version: 3.3.0
+bits: 32
+filename: ../examples/linux/fpu.out
+origin: 00000000
+00000000 (02) d9d8                     FSTPNCE ST0, ST0
+00000002 (02) dfdf                     FSTP ST0, ST7
+00000004 (02) dfdf                     FSTP ST0, ST7
+00000006 (02) dfdf                     FSTP ST0, ST7
+00000008 (02) dfdf                     FSTP ST0, ST7
+0000000a (02) dfdf                     FSTP ST0, ST7
+0000000c (02) 8bec                     MOV EBP, ESP
+
+
+
+
+[1] Radu, Daniel.  "Investigation of a new undocumented instruction trick".  Site:  http://blogs.technet.com/b/mmpc/archive/2013/06/24/investigation-of-a-new-undocumented-instruction-trick.aspx.  Last Accessed: 11/05/2013.
+
+[2] Merces, Fernando.  "PEV - PE File Analysis Toolkit".  Site:
+https://github.com/merces/pev.  Last Accessed:  11/05/2013.
+
+[3] Dabah, Gil.  "diStorm internals".  Site:
+https://code.google.com/p/distorm/wiki/diStorm_Internals.  Last Accessed:
+11/05/2013.
+
+
+APPENDIX A (the patch):
+
+Since the patch itself is just a few lines, but the generation of the output and replacement of the insts.c file creates a big output (>15000 lines), I'm including here only a link to
+download the patch (for the lazy ones).  This patch is incorporated in the distorm3 SVN:
+	http://www.kernelhacking.com/rodrigo/files/distorm3_fstpnce.patch
