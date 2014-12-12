@@ -1,0 +1,398 @@
+Macof is part of Dsniff package.
+
+This document was written based on the version:
+	dsniff-2.3.tar.gz
+
+To download the package, please, refer to:
+	http://monkey.org/~dugsong/dsniff
+
+Author:  Rodrigo Rubira Branco (BSDaemon)
+	 http://twitter.com/bsdaemon
+	 rodrigo *noSPAM* kernelhacking.com
+
+
+Abstract
+
+Macof is an integral part of Dsniff suite, which comprises of network
+auditing tools to demonstrate the insecurity of cleartext/weakly-encrypted
+network protocols and ad-hoc PKI.
+
+This document explains the internals of the macof binary analyzing its
+source code, the macof.c file.  Macof is a C port of the macof-1.1 available
+in the Perl Net::RawIP distribution and exists to test network devices by
+flooding the local network with Mac-addresses.
+
+
+Motivation
+
+After a long discussion in a mailing list regarding the functionalities of
+macof, I decided to give a technical answer that actually helps the community.
+
+This is a commented description of macof source code, which is useful for
+learning how to create such tools and as well to clarify what the tool actually
+does.   Additionally, the reader will become more familiar with libnet.
+
+
+---------- Index --------------
+
+- Command options
+- General working features
+- Compilation
+- main()
+- usage()
+- gen_mac()
+- libnet-related functions
+	- libnet_get_prand()
+	- libnet_name_resolve()
+	- libnet_open_link_interface()
+	- libnet_seed_prand()
+	- libnet_build_ethernet()
+	- libnet_build_ip()
+	- libnet_build_tcp()
+	- libnet_do_checksum()
+	- libnet_write_link_layer()
+	- libnet_host_lookup()
+- other used functions
+	- ether_ntoa()
+	- ether_aton()
+	- pcap_lookupdev()
+	- errx() (missing/err.{c|h})
+---------- end of index --------------
+
+- Command Options
+
+It is preferable to refer to the macof(8) manpage included in the dsniff
+source code to learn about command options, but to help the understanding
+of the command-line parsing, here it goes a complete list of command line
+arguments:
+	-i interface  -> Interface to send information on
+	-s src	      -> Source IP address
+	-d dst	      -> Destination IP address
+	-e tha	      -> Target hardware address
+	-x sport      -> TCP Source port
+	-y dport      -> TCP Destination port
+	-n times      -> Number of packets to send
+
+The manpage itself specifieds that values not choosen by the user, will
+be randomly defined (we going to validate that in the code).
+
+- General Working Features
+
+From the manpage:
+	"macof floods the local network with random MAC addresses (causing
+some switches to fail open in repeating mode, facilitating sniffing).  A
+straight C port of the original Perl Net::RawIP macof program by Ian
+Vitek <ian.vitek@infosec.se>".
+
+Macof will start sending TCP packets (the amount is user defined or the highest possible integer value), using randomly choosen source mac addresses to
+randomly choosen destination mac addresses (unless user specified target). The
+source and destination IP and Ports for those TCP packets are either user
+defined or randomly generated as well.
+
+Macof creates the random values using libnet_get_prand() with either PRu32 or
+PRu16 types (for creating unsigned 32 or 16 bits values).
+
+Macof sends the packets in the user defined interface or in the interface
+returned by a pcap_lookupdev() call.
+
+The final result of those generated packets sent to the network is an attack
+that affects some network devices (switches), making them to act like repeaters
+(HUBs).
+
+
+- Compilation
+
+Lets start analyzing the Makefile and its parts related to the macof
+program.
+
+The var PROGS is defined to contain the compilation name for the binaries
+of the suite, and that includes the macof:
+
+	--- from the Makefile ---
+	PROGS = arpspoof dnspoof dsniff filesnarf macof mailsnarf msgsnarf \
+		sshmitm tcpkill tcpnice @TCPHIJACK@ urlsnarf webmitm @WEBSPY@
+	--- end from Makefile ---
+
+When the user types make or make all, it will compile using the above rule:
+
+	--- from the Makefile ---
+	all: libmissing.a $(PROGS)
+	--- end from Makefile ---
+
+This tells 'make' to compile the libmissing.a and then the PROGS, including
+macof.
+
+libmissing.a rule will basically compile $(LIBOBJS), which is defined as
+a compilation target per se and compiles missing/$*.c files in the library
+(this rule creates the libmissing.a based on the C source codes included
+in the missing/ subdirectory of the dsniff package).  The source available
+on the missing directory provide functionallity not present in all systems
+but required for the usage of the dsniff suite.
+
+The macof Makefile rule itself is pretty simple:
+
+	--- from the Makefile ---
+	macof: macof.o
+		$(CC) $(LDFLAGS) -o $@ macof.o $(LIBS) $(PCAPLIB) $(LNETLIB)
+	--- end from Makefile ---
+
+It tells 'make' to create a binary macof, using the system LDFLAGS, the
+libmissing (the LIBS var defines the configured libraries, the location
+to search libraries to also include the dsniff source and the missing
+library to be used), the pcap library and libnet libraries are also
+compiled in.
+
+To resume the whole compilation process, we have:
+	- Sources from the missing/ directory compiled in a static library
+named libmissing.a
+	- The source code in macof.c compiled and linked to the static
+library, to the pcap library and to the libnet library.
+	- A final binary named 'macof' is created.
+
+
+- main()
+
+Macof uses a getopt() looping to parse its command-line options.
+
+It defines the following vars based on the options:
+	Src -> Based on the -s option (libnet_name_resolve() return from the
+optarg).
+	Dst -> Based on the -d option (libnet_name_resolve() return from the
+optarg).
+	Tha -> Based on the -e option (ether_aton() return from the optarg).
+	Sport -> Based on the -x option (atoi() return from the optarg).
+	Dport -> Based on the -y option (atoi() return from the optarg).
+	Intf -> Based on the -i option.
+	Repeat -> Based on the -n option (atoi() return from the optarg).
+
+All the above variables are globally initialized to NULL or 0 (depending on
+their types), with the exception of the Repeat (which is -1 by default).
+
+After parsing the command line options, the main() function checks for extra
+options, showing the usage() in case of mistakes by the user.
+
+It proceeds then checking for the Intf option to see if does have a valid
+interface to send packets into. An error is issued in case of problems using
+the errx() function.
+
+After the check, it immediatly tries to open the interface, also issuing an
+error in case of problems (also uses the errx() function).
+
+The initialization of the pseudo-random seed of the libnet is done by a call to
+the libnet_seed_prand() function and finally the main logic of the program
+starts.
+
+It will loop from 0 to Repeat number, incrementing by 1 each time the main
+operation (sending a packet) is performed.  Since Repeat is -1 by default,
+the program will loop until i (an integer used to control the for loop)
+becomes negative in case of the user does not supply a limit.
+
+The loop is pretty simple and straightforward (for details on the called
+functions, please, refer to the appropriated section in this document):
+	- Creates a source mac address by calling gen_mac().  It is hold in
+	the local var sha
+	- Checks if a target mac address is defined (Tha != NULL) and if not,
+	calls gen_mac(Tha) to create a target mac address.  Local var tha
+	will hold the target mac address (randomly generated or user defined)
+	- Checks if the source address is defined (Src != 0) and if not,
+	calls libnet_get_prand(PRu32) to create a source IP.  Local var src
+	will hold the source address (randomly generated or user defined)
+	- Checks if the destination address is defined (Dst != 0) and if not,
+	calls libnet_get_prand(PRu32) to create a destination IP.  Local var
+	dst will hold the destination address (randomly generated or user
+	defined)
+	- Checks if the source port is defined (Sport != 0) and if not,
+	calls libnet_get_prand(PRu16) to create a source port.  Local var
+	sport will hold the source port (randomly generated or user defined)
+	- Checks if the destination port is defined (Dport != 0) and if not,
+	calls libnet_get_prand(PRu16) to create a destination port.  Local var
+	dport will hold the destination port (randomly generated or user
+	defined)
+	- Calls libnet_get_prand(PRu32) to create a sequence number (saved
+	in the seq unsigned integer local variable)
+	- Calls libnet_build_ethernet() to create the ethernet frame, using
+	tha and sha as target and source mac addresses, IP as the next layer
+	packet and the local buffer pkt as the target for the generated content
+	(pkt is of the size of the ethernet header + IP header + TCP header
+	so it will hold the entire packet to be sent)
+	- Calls libnet_build_ip(), informing the transport layer protocol
+	to be TCP (type 6), src and dst vars used as source and destination
+	IP address and save the result in pkt buffer (at the offset ETH_H which
+	is the size of the ethernet header previously created in the buffer).
+	- Calls libnet_build_tcp(), informing the sport and dport as the
+	source and destination ports and the seq as sequence number.  The flag
+	SYN is set in the packet and it is saved at the pkt buffer (at the
+	offset ETH_H + IP_H which is the size of the ethernet header plus the
+	IP header previouly created in the buffer)
+	- Calls libnet_do_checksum() twice, once for the IP header and once
+	for the TCP header, saving the result in the appropriated location in
+	the pkt buffer
+	- Calls libnet_write_link_layer() to send the packet pkt in the defined
+	interface, calling errx() in case of error
+	- Uses fprintf to print to the standard error descriptor information
+	about the created packet (source mac, destination mac, source and
+	destination target name/address, source and destination port, sequence
+	number, fragment offset (always 0) and flags set (always SYN)).
+
+
+- usage()
+	This function prints to the standard error descriptor the version
+of the software and then a basic Usage options.  After that, it exits with
+1.
+
+- gen_mac()
+	Receives a u_char pointer, defines the beginning as a 32 bit
+address pointer received by the libnet_get_prand(PRu32) function and then
+the last 16 bits defined by a libnet_get_prand(PRu16) function call.
+	This gives 48 randomly created bits to be used as a mac address in
+network byte order.
+
+- libnet-related functions [1]
+	- u_int32 libnet_get_prand(int mod)
+	This function receives an integer mod and returns an unsigned pseudo-
+random value within the range specified by mod.
+	PRu16 is the range 0-65535
+	PRu32 is the range 0-2147483647.
+
+	- u_long libnet_name_resolve(u_char *, u_short)
+	Takes a NULL terminated ASCII string representation of an IP address
+(dots and decimals or canonical hostname if LIBNET_RESOLVE flag is set) and
+converts it into a network orderered unsigned long value.
+
+	- struct link_int * libnet_open_link_interface(char *, char *)
+	This function opens a low-level packet interface.  It is used in order
+to be able to send link layer frames.
+
+	- int libnet_seed_prand()
+	This function is a wrapper to srandom().  It seeds the pseudo-random
+number generator (required for posterior calls to libnet_get_prand()).
+
+	- int libnet_build_ethernet(u_char *, u_char *, u_short, const u_char *, int, u_char *)
+	This function constructs an ethernet frame.  In macof, it is called
+in the following way:
+
+		--- From macof.c ---
+		libnet_build_ethernet(tha, sha, ETHERTYPE_IP, NULL, 0, pkt);
+		--- End  macof.c ---
+
+	Tha -> Destination address
+	Sha -> Source address
+	ETHERTYPE_IP -> Specifies the frame carries the IP protocol
+	NULL -> This is pointing to the packet payload
+	0 -> The packet payload size
+	pkt -> Pre-allocated memory (in this case, a fixed size buffer)
+
+
+	- int libnet_build_ip(u_short, u_char, u_short, u_short, u_char, u_char, u_long, u_long, const u_char *, int, u_char *)
+	This function constructs an IP packet and is called in the following
+way:
+
+		--- From macof.c ---
+		libnet_build_ip(TCP_H, 0, libnet_get_prand(PRu16), 0, 64,
+				IPPROTO_TCP, src, dst, NULL, 0, pkt + ETH_H);
+		--- End  macof.c ---
+
+	TCP_H -> Packet lenght not including the IP header itself
+	0 -> Type of service
+	libnet_get_prand(PRu16) -> Random packet id
+	0 -> Fragmentation bits
+	64 -> Time to Live (TTL)
+	IPPROTO_TCP -> Transport layer protocol is TCP
+	src -> Source IP Address
+	dst -> Destination IP Address
+	NULL -> Pointer to the packet payload
+	0 -> Packet payload size
+	pkt + ETH_H -> Pointer to where to write the created packet (after the ethernet header)
+
+	- int libnet_build_tcp(u_short, u_short, u_long, u_long, u_char, u_short, u_short, const u_char *, int, u_char *)
+	This function constructs a TCP packet and is called in the following
+way:
+
+		--- From macof.c ---
+		libnet_build_tcp(sport, dport, seq, 0, TH_SYN, 512,
+				 0, NULL, 0, pkt + ETH_H + IP_H);
+		--- End  macof.c ---
+
+	sport -> Source Port
+	dport -> Destination Port
+	seq -> Sequence Number
+	0 -> ACK Number
+	TH_SYN -> Syn flag
+	512 -> Window Size
+	0 -> Urgent Pointer
+	NULL -> Pointer to packet payload
+	0 -> Packet payload size
+	pkt + ETH_H + IP_H -> Pointer to where to write the created packet (after the ethernet and ip headers)
+
+	- int libnet_do_checksum(u_char *, int, int)
+	This function calculates the checksum for a packet and is called in the following way.
+
+		--- From macof.c ---
+		libnet_do_checksum(pkt + ETH_H, IPPROTO_IP, IP_H);
+		libnet_do_checksum(pkt + ETH_H, IPPROTO_TCP, TCP_H);
+		--- End  macof.c ---
+
+	pkt + ETH_H -> Pointer to the packet buffer (just after the ethernet header)
+	IPPROTO_IP or IPPROTO_TCP -> Protocol number for the packet type to calculate
+	IP_H or TCP_H -> Total packet size to calculate the checksum
+
+	- int libnet_write_link_layer(struct link_int *, const u_char *, u_char *, int)
+	This function writes the frame to the network.  It is used in macof in the following way:
+
+		--- From macof.c ---
+		if (libnet_write_link_layer(llif, Intf, pkt, sizeof(pkt)) < 0)
+		--- End  macof.c ---
+
+	llif -> Is a pointer returned by the libnet_open_link_interface() function
+	Intf -> Pointer to the network device
+	pkct -> Packet to inject in the network
+	sizeof(pkc) -> Size of the packet to inject
+
+	This function returns -1 in case of error, which is handled by the program.
+
+	- u_char * libnet_host_lookup(u_long, u_short)
+	Converts an IP address in network byte order to a human-readable form.
+
+
+- other used functions
+
+	- ether_ntoa()
+		Used to print an ethernet address received in network byte order
+in standard hex-digits-and-colons notation, omitting leading zeroes.
+
+	- ether_aton()
+		Used to convert an ethernet address received in
+hex-digits-and-colons format to binary data in network byte order.
+
+	- pcap_lookupdev()
+		Finds the default device on which to capture.  It will return
+NULL if none is found.
+
+	- errx() (missing/err.{c|h})
+		Receives a return value to be used in the exit() call in the
+end of the function and a format string message to be printed in the standard
+error descriptor, followed by a newline and then the aforementioned exit() call.
+
+
+
+- Frequently Asked Questions (FAQ)
+
+1-) My teacher told me that Macof zeroes the CAM table of the host, but this
+is not happening on my machine, why?
+
+A:  The host does not have a CAM table, it does have an ARP table instead.  Anyway, if you follow the internals documentation from the beginning you will clearly understand that macof does not erase the arp table of the host.  This is not
+supposed to happen in any conditions.
+
+2-) What is CAM table and how it differs from the ARP table?
+
+A:  Briefly speaking, a CAM table is a cache the switch creates in order to map
+a given MAC to a specific port.  It is what differentiates a switch from a hub (which broadcasts all frames to all ports).  The ARP table is a different type
+of mapping, existent in a host machine and responsible for mapping IP address
+to MAC addresses.  The only relation between then is that both tables get updated when there is ARP requests/replies in the network (the switch learn in which port a given MAC is and the host learn which MAC has an IP).
+
+3-) The host copies the CAM table of the switch?
+
+A:  By the answer for question 2, it is probably clear that is not the case.  There is no way for the host to know which port a giving MAC is in the switch (unless using management protocols provided by the switch itself).
+
+
+[1] route.  "The Libnet Reference Manual v.01".  Phrack Magazine 55.

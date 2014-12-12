@@ -1,0 +1,147 @@
+Questions compiled by Yan Harry <renzhongyan@gmail.com>
+Answers by Rodrigo Rubira Branco <rodrigo@kernelhacking.com>
+
+
+Question 1. 
+I don't understand the following codes about sys_call_table in StJude_lkm.c file:
+sys_call_table = NULL;
+ for (ptr = (unsigned long) &loops_per_jiffy;
+   ptr < (unsigned long) &boot_cpu_data; ptr += sizeof(void *))
+ {
+  unsigned long *p;
+  p = (unsigned long *) ptr;
+  if (p[1] == (unsigned long) sys_exit) 
+  {
+   sys_call_table = (void **) p;
+   break;
+  }
+ } 
+ 
+ why is the address of sys_call_table between &loops_per_jiffy and &boot_cpu_data?
+A: 1. loops_per_jiffy and boot_cpu_data are exported. 
+   2. the address of sys_call_table is between loops_per_jiffy and boot_cpu_data.
+      we can see it from System.map file.
+   3. the second syscall into the sys_call_table is sys_exit.
+
+for i386 platform, the definitions are as follows:
+sys_call_table is defined in arch/i386/kernel/entry.s
+
+loops_per_jiffy  is defined in init/main.c file.
+unsigned long loops_per_jiffy = (1<<12);
+
+boot_cpu_data is defined in arch/i386/kernel/setup.c file.
+/* common cpu data for all cpus */
+struct cpuinfo_x86 boot_cpu_data __read_mostly = { 0, 0, 0, 0, -1, 1, 0, 0, -1 };
+EXPORT_SYMBOL(boot_cpu_data);
+
+****************************************************************************************
+Question 2.
+can StMichael detect rootkits which redirect the system call table, such as SuckIT rootkit? this type of rootkit keeps the original system call table intact.
+
+A: of course. stmichael doesn't see only sys_call_table. it checks the
+integrity of many parts of the kernel, including if the sys_call_table[]
+pointers points to a kernel text area, and many others (like check the
+integrity of the functions called itself, and others).
+
+****************************************************************************************
+Question 3.
+I don't understand the following codes about sj_s_text and sj_e_text in init_module() function:
+      sj_s_text = (void *) (PAGE_OFFSET|0x00100000);
+      for ( m = *eml; m->next; m = m->next ); 
+      for ( s = m->syms; s->name; s++ );
+      sj_e_text = (void *) s;
+sj_s_text is the start of kernel text, and PAGE_OFFSET is OXC0000000 on i386 platform in Linux kernel. sj_e_text is the end of kernel text. I can't understand why sj_s_text and sj_e_text was computed as above codes? 
+
+A:
+/* here, i point the sj_s_text to the begin of the Kernel text.
+ PAGE_OFFSET | 0x00100000 returns the begin of the kernel text
+PAGE_OFFSET(0XC0000000) ----- THE START OF VIRTUAL KERNEL SPACE 
+all normal kernel code in vmlinuz is compiled with the base address at PAGE_OFFSET + 1MiB, the kernel is actually loaded beginning at the first megabyte (0x00100000) of memory. The first megabyte is used by some devices for communication with the BIOS and is skipped.
+*/
+sj_s_text = (void *) (PAGE_OFFSET|0x00100000);
+
+/* this 2 lines ill loops throught the modules
+structures until the end of the modules itself and the symbols/names */
+for ( m = *eml; m->next; m = m->next );
+for ( s = m->syms; s->name; s++ );
+
+/* now, we stay into the end of kernel text (all address that isnt into
+sj_s_text and sj_e_text for the sys_call_table isnt into the correct place
+*/
+sj_e_text = (void *) s;
+
+this two sj_s_text and sj_e_text will be used into the MACRO
+IS_IN_KERNEL_TEXT as you can see that macro will check if the address of the
+syscalls are into the correct place without need to hash or to check address
+by address (only an approach used into the load).
+
+****************************************************************************************
+Question 4.
+I noticed you used sys_call_table symbol to replace system calles.
+but sys_call_table isn't exported in Linux 2.6.*, so how do you replace
+system calles in Linux 2.6.*?
+
+A: the method is in StJude_lkm.c file. you can reference Question 1.
+
+****************************************************************************************
+Question 5.
+/dev/kmem was disabled to be wrote now in StMichael, I think this
+will affect the following normal function:
+from http://lists.debian.org/debian-security/2004/07/msg00186.html
+1,Some boot loaders need to access /dev/mem or /dev/kmem for getting BIOS data.  such as Lilo. 
+2. klogd uses such access, probably for decoding Oops messages (it can probably 
+operate fine without it for some loss of functionality).
+3, vmware uses such access (and lots of other invasive access to kernel memory). 
+4. Many xdm type programs read kernel memory as a source of randomness.  This is 
+bad because kernel memory is not random and it may leak some information from 
+the kernel.  xdm in Fedora should be fixed to use /dev/random. 
+5. The X server needs such access if it's accessing the hardware directly.  If it 
+uses the fbdev then it should not need such access.
+
+A: No one needs to write into /dev/kmem.
+functions 1~4 are just get info from /dev/kmem using read operation.
+I seen problems with old x servers and pax patchs because the /dev/kmem
+write needs.. it doesnt exist anymore.
+
+
+****************************************************************************************
+Question 6.
+I found both StJude and StMichael just work for Linux 2.2.* and 2.4.*. Do
+you have any plan to make it work for Linux 2.6.*?
+
+A:
+yeah, im working on that... the next version ill be for 2.6 kernel...
+the plan is to keep maintain a 2.2/2.4 version and another to 2.6 (dont want
+to keep backward compatibilities because 2.6 kernel have changed a lot of in
+the module construction).
+
+****************************************************************************************
+Question 7.
+what difficulties are there If they were ported to Linux 2.6.*?
+
+A:
+time is the major difficult i think... but, 2.6 have changed the module
+construction, a lot of structures have changed and a lot of others has been
+addeded (i think now we need to check LSM integrity too)...
+
+****************************************************************************************
+Question 8.
+Do you have any more detailed document about StJude and StMichael projects
+except documents which can be gained in http://sourceforge.net/projects/stjude?
+
+A:
+not... the documentation provided explain all the idea of the modules (and
+the model)... the code itself is documented to explain the code structure
+and technical detail the project.
+
+****************************************************************************************
+Question 9.
+why does many functions replacing standand system functions in StJude_string_util.c are used?
+fox example, sjp_l_strlen replaces strlen...
+
+A:
+because the original strlen is exported by the kernel (so, a cracker can hook that and then fucking the stjude checks). 
+like the comment into the printf function (that replaces the printk) as follows:
+This is a more secure replacement for printk. It's a function local to this module and its address isn't exported to the kernel, so it isn't so easy to modify as printk. 
+
+  
